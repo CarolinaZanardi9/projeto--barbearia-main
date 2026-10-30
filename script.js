@@ -1,16 +1,3 @@
-const button = document.getElementById('toogle-mode');
-
-button.addEventListener('click', () => {
-  document.body.classList.toggle('black-white');
-  const isBlack = document.body.classList.contains('black-white');
-
-  // Troca o ícone do botão
-  button.textContent = isBlack ? '☼' : '☾';
-
-  // Salva no localStorage
-  localStorage.setItem('mode', isBlack ? 'black' : 'color');
-});
-
 // Ao carregar a página, verifica o localStorage
 if (localStorage.getItem('mode') === 'black') {
   document.body.classList.add('black-white');

@@ -719,3 +719,99 @@ body.black-white h2 {
   cursor: pointer;
 }
 .botao-login:hover { background: #B47B43; color: #fff; }
+
+/* Página de confirmação do agendamento */
+.resumo {
+  list-style: none;
+  margin: 24px 0 30px;
+}
+
+.resumo li {
+  padding: 12px 0;
+  font-size: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.resumo strong {
+  color: #B47B43;
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #fff;
+}
+
+.btn-whatsapp:hover,
+.btn-whatsapp:focus {
+  background-color: #1ebe5a;
+  outline-color: #25D366;
+}
+
+.btn-cancelar {
+  text-align: center;
+}
+
+
+.agendamentos-lista { 
+  list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 24px 0 0; 
+}
+
+.item-agendamento { 
+  background: #1a1a1a; border-radius: 10px; padding: 16px 18px; border-left: 4px solid #B47B43; 
+}
+
+.item-agendamento h3 { 
+  font-size: 18px; margin-bottom: 6px; 
+}
+
+.item-agendamento p { 
+  font-size: 15px; color: #D9D8D8; margin-bottom: 4px; 
+}
+
+.status { 
+  display: inline-block; font-size: 13px; font-weight: bold; padding: 3px 12px; border-radius: 20px; margin-top: 6px; 
+}
+
+.status-agendado { 
+  background: #B47B43; color: #fff; 
+}
+
+.status-concluido { 
+  background: #2E7D32; color: #fff; 
+}
+
+.status-cancelado { 
+  background: #8b2e2e; color: #fff; 
+}
+
+.btn-cancelar-ag { 
+  margin-top: 12px; padding: 8px 18px; border-radius: 150px; border: 2px solid #b33a3a;
+  background: transparent; color: #ff9b9b; font-family: inherit; font-weight: bold; cursor: pointer; 
+}
+
+.btn-cancelar-ag:hover { 
+  background: #8b2e2e; color: #fff; 
+}
+
+.aviso-ok { 
+  text-align: center; color: #9be39b; margin: 16px 0 0; 
+}
+
+.aviso-erro { 
+  text-align: center; color: #ffb4b4; margin: 16px 0 0; 
+}
+
+/* Links na página de agendamento */
+.subtitulo a {
+  color: #B47B43;
+  text-decoration: none;
+}
+
+.subtitulo a:visited {
+  color: #B47B43;
+}
+
+.subtitulo a:hover {
+  text-decoration: underline;
+}
+

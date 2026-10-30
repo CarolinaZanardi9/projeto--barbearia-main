@@ -1,4 +1,11 @@
-<?php require_once 'conexao.php'; ?>
+  <?php
+  session_start();
+  require_once 'conexao.php';
+  if (!isset($_SESSION['cliente_id'])) {
+      header('Location: entrar.php');
+      exit;
+  }
+  ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -26,30 +33,11 @@
     <main class="pagina-agendamento">
   <div class="form-agendamento">
     <h1>Agende seu horário</h1>
-    <p class="subtitulo">Preencha os dados abaixo e garanta seu atendimento.</p>
+       <p class="subtitulo">Olá, <?= htmlspecialchars($_SESSION['cliente_nome']) ?> ·
+     <a href="meus_agendamentos.php">Meus agendamentos</a> ·
+     <a href="sair.php">Sair</a></p>
 
     <form method="POST" action="salvar_agendamento.php">
-
-      <div class="linha">
-        <div class="campo">
-          <label for="nome">Nome</label>
-          <input type="text" name="nome" id="nome" maxlength="50" required>
-        </div>
-        <div class="campo">
-          <label for="sobrenome">Sobrenome</label>
-          <input type="text" name="sobrenome" id="sobrenome" maxlength="50" required>
-        </div>
-      </div>
-
-      <div class="campo">
-        <label for="telefone">Telefone</label>
-        <input type="tel" name="telefone" id="telefone" maxlength="20" required>
-      </div>
-
-      <div class="campo">
-        <label for="email">E-mail (opcional)</label>
-        <input type="email" name="email" id="email" maxlength="100">
-      </div>
 
       <div class="campo">
         <label for="servico">Serviço</label>
@@ -57,15 +45,18 @@
           <option value="">Selecione</option>
           <?php
           $servicos = $conn->query(
-          "SELECT s.id, s.nome, p.nome AS profissional
-          FROM servicos s
-          JOIN profissionais p ON p.id = s.profissionais_id"
+            "SELECT s.id, s.nome, s.preco, p.nome AS profissional
+            FROM servicos s
+            JOIN profissionais p ON p.id = s.profissionais_id"
           );
-            foreach ($servicos as $s) {
-            echo "<option value='" . $s['id'] . "'>"
-           . htmlspecialchars($s['nome'] . " - com " . $s['profissional'])
-           . "</option>";
-    }
+          foreach ($servicos as $s) {
+          $preco = $s['preco'] > 0
+            ? 'R$ ' . number_format($s['preco'], 2, ',', '.')
+            : 'a combinar';
+          echo "<option value='" . $s['id'] . "'>"
+            . htmlspecialchars($s['nome'] . " - " . $preco . " (com " . $s['profissional'] . ")")
+            . "</option>";
+          }
           ?>
         </select>
       </div>
