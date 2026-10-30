@@ -43,7 +43,7 @@ function confirmacao($r, $dia, $horario, $nome) {
             <li><strong>Valor:</strong> $valor</li>
           </ul>
           <a class='btn-agendar btn-whatsapp' href='$zap' target='_blank'>Enviar no WhatsApp</a>
-          <a class='btn-cancelar' href='index.html' style='margin-top:12px;'>Voltar ao site</a>
+          <a class='btn-cancelar' href='sair.php' style='margin-top:12px;'>Voltar ao site</a>
           </div></main></body></html>";
     exit;
 }
