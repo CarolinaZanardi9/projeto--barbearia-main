@@ -652,7 +652,7 @@ body.black-white h2 {
 }
 
 
-.painel { max-width: 1000px; }
+.painel { max-width: 1200px; }
 .filtro-dia { display: flex; gap: 12px; margin-bottom: 24px; }
 .filtro-dia input { padding: 10px; border-radius: 8px; border: none;
                     background: #1a1a1a; color: #fff; color-scheme: dark; }
@@ -675,6 +675,24 @@ body.black-white h2 {
    padding: 6px 12px; 
    border-radius: 8px; text-decoration: none; }
 .btn-editar:hover { 
+  background-color: #D9D8D8; 
+  color: #000
+}
+
+.btn { background-color: #B47B43; 
+   color: #fff;
+   padding: 6px 12px; 
+   border-radius: 8px; text-decoration: none; }
+.btn:hover { 
+  background-color: #D9D8D8; 
+  color: #000
+}
+
+.btn { background-color: #B47B43; 
+   color: #fff;
+   padding: 6px 12px; 
+   border-radius: 8px; text-decoration: none; }
+.btn:hover { 
   background-color: #D9D8D8; 
   color: #000
 }
@@ -815,3 +833,14 @@ body.black-white h2 {
   text-decoration: underline;
 }
 
+/* Botões da coluna Ações na mesma linha */
+.acoes {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.painel td { white-space: nowrap; }
+
+button.btn { border: none; cursor: pointer; font: inherit; }

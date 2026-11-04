@@ -7,7 +7,16 @@ if (!isset($_SESSION['usuario_id'])) {
 require_once 'conexao.php';
 date_default_timezone_set('America/Sao_Paulo');
 
+if (empty($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(random_bytes(16));
+}
+
 $dia = $_GET['dia'] ?? date('Y-m-d');
+
+$d = DateTime::createFromFormat('Y-m-d', $dia);
+if (!$d || $d->format('Y-m-d') !== $dia) {
+    $dia = date('Y-m-d');
+}
 
 $stmt = $conn->prepare(
     "SELECT a.id, a.horario, c.nome, c.sobrenome, c.telefone,
@@ -41,6 +50,8 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit" class="btn-agendar">Ver</button>
       </form>
 
+      <a href="logout.php" class="btn-cancelar">Sair</a>
+
       <?php if (count($agendamentos) === 0): ?>
         <p class="subtitulo">Nenhum agendamento neste dia.</p>
       <?php else: ?>
@@ -48,7 +59,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <tr>
             <th>Hora</th><th>Cliente</th><th>Telefone</th>
             <th>Serviço</th><th>Profissional</th><th>Status</th><th>Ações</th>
-            <a href="logout.php" class="btn-cancelar">Sair</a>
           </tr>
           <?php foreach ($agendamentos as $a): ?>
           <tr>
@@ -59,9 +69,16 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($a['profissional']) ?></td>
             <td><?= htmlspecialchars($a['status']) ?></td>
             <td>
-                <a class="btn-editar" href="editar.php?id=<?= $a['id'] ?>">Editar</a>
-                <a class="btn-excluir" href="excluir.php?id=<?= $a['id'] ?>&dia=<?= urlencode($dia) ?>"
-                   onclick="return confirm('Deseja excluir este agendamento?')">Excluir</a>
+              <div class="acoes">
+                <a href="editar.php?id=<?= (int)$a['id'] ?>" class="btn">Editar</a>
+              <form method="POST" action="excluir.php" style="display:inline"
+                onsubmit="return confirm('Excluir este agendamento? Não dá para desfazer.');">
+                <input type="hidden" name="id" value="<?= (int)$a['id'] ?>">
+                <input type="hidden" name="dia" value="<?= htmlspecialchars($dia) ?>">
+                <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+                <button type="submit" class="btn">Excluir</button>
+              </form>
+              </div>
             </td>
           </tr>
           <?php endforeach; ?>

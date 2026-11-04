@@ -1,11 +1,12 @@
-  <?php
+<?php
   session_start();
   require_once 'conexao.php';
+  date_default_timezone_set('America/Sao_Paulo');
   if (!isset($_SESSION['cliente_id'])) {
       header('Location: entrar.php');
       exit;
   }
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -68,7 +69,13 @@
         </div>
         <div class="campo">
           <label for="horario">Horário</label>
-          <input type="time" name="horario" id="horario" min="09:00" max="21:30" step="1800" required>
+          <select name="horario" id="horario" required>
+            <option value="">Selecione</option>
+            <?php for ($m = 9 * 60; $m <= 21 * 60 + 30; $m += 30):
+            $h = sprintf('%02d:%02d', intdiv($m, 60), $m % 60); ?>
+            <option value="<?= $h ?>"><?= $h ?></option>
+            <?php endfor; ?>
+          </select>
         </div>
       </div>
 

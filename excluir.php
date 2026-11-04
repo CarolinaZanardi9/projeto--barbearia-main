@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 session_start();
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: login.php');
@@ -8,8 +6,16 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 require_once 'conexao.php';
 
-$id  = (int) ($_GET['id'] ?? 0);
-$dia = $_GET['dia'] ?? date('Y-m-d');
+// só aceita POST com o token certo (vem do painel)
+$token = $_SESSION['csrf'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $token === ''
+    || !hash_equals($token, $_POST['csrf'] ?? '')) {
+    header('Location: painel.php');
+    exit;
+}
+
+$id  = (int) ($_POST['id'] ?? 0);
+$dia = $_POST['dia'] ?? date('Y-m-d');
 
 if ($id > 0) {
     $stmt = $conn->prepare("DELETE FROM agendamento WHERE id = ?");

@@ -7,8 +7,10 @@ if (!isset($_SESSION['cliente_id'])) {
     header('Location: entrar.php');
     exit;
 }
+$token = $_SESSION['csrf'] ?? '';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST'
-    || !hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
+    || $token === ''
+    || !hash_equals($token, $_POST['csrf'] ?? '')) {
     header('Location: meus_agendamentos.php?msg=erro');
     exit;
 }

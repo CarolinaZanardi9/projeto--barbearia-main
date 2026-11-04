@@ -72,17 +72,20 @@ if ($servico_id <= 0) {
     mensagem('Escolha o serviço.');
 }
 $data = DateTime::createFromFormat('Y-m-d', $dia);
-if (!$data) {
+if (!$data || $data->format('Y-m-d') !== $dia) {
     mensagem('Data inválida.');
 }
-if ($dia < date('Y-m-d')) {
-    mensagem('Não é possível agendar em uma data que já passou.');
+if (!preg_match('/^\d{2}:\d{2}$/', $horario)) {
+    mensagem('Horário inválido.');
+}
+if ($dia . ' ' . $horario <= date('Y-m-d H:i')) {
+    mensagem('Esse horário já passou.');
 }
 if ($data->format('N') == 7) {
     mensagem('Não funcionamos aos domingos.');
 }
-if ($horario < '08:55' || $horario > '21:30') {
-    mensagem('Horário fora do funcionamento (08:55 às 22:00).');
+if ($horario < '09:00' || $horario > '21:30') {
+    mensagem('Horário fora do funcionamento (09:00 às 21:30).');
 }
 
 try {
@@ -123,5 +126,11 @@ try {
 
 } catch (PDOException $e) {
     error_log($e->getMessage());
+
+    // 23000 = violação de índice único (horário acabou de ser ocupado)
+    if ($e->getCode() === '23000') {
+        mensagem('Esse horário acabou de ser ocupado. Escolha outro.');
+    }
+
     mensagem('Não foi possível concluir o agendamento. Tente novamente em instantes.');
 }
