@@ -844,3 +844,43 @@ body.black-white h2 {
 .painel td { white-space: nowrap; }
 
 button.btn { border: none; cursor: pointer; font: inherit; }
+
+
+/* Página de editar agendamento: campos no mesmo estilo do formulário */
+.form-agendamento input[type="date"],
+.form-agendamento input[type="time"],
+.form-agendamento input[type="text"],
+.form-agendamento select {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #fff;
+  background-color: #1a1a1a;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color-scheme: dark;
+  transition: border-color 0.3s;
+}
+
+.form-agendamento input[type="date"]:focus,
+.form-agendamento input[type="time"]:focus,
+.form-agendamento input[type="text"]:focus,
+.form-agendamento select:focus {
+  outline: none;
+  border-color: #B47B43;
+}
+
+.form-agendamento select option {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+/* Rótulos (Dia, Horário, Status) acima de cada campo */
+.form-agendamento form > label {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 16px 0 8px;
+}

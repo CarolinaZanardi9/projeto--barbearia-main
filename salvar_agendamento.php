@@ -27,7 +27,7 @@ function confirmacao($r, $dia, $horario, $nome) {
            . "Data: $data\nHorário: $hora";
     $zap = "https://wa.me/5511976062871?text=" . rawurlencode($texto);
 
-    echo "<!DOCTYPE html><html lang='pt-br'><head>
+        echo "<!DOCTYPE html><html lang='pt-br'><head>
           <meta charset='UTF-8'>
           <meta name='viewport' content='width=device-width, initial-scale=1.0'>
           <link rel='stylesheet' href='style.css'>
@@ -43,6 +43,7 @@ function confirmacao($r, $dia, $horario, $nome) {
             <li><strong>Valor:</strong> $valor</li>
           </ul>
           <a class='btn-agendar btn-whatsapp' href='$zap' target='_blank'>Enviar no WhatsApp</a>
+          <a class='btn-cancelar' href='meus_agendamentos.php' style='margin-top:12px;'>Meus agendamentos</a>
           <a class='btn-cancelar' href='sair.php' style='margin-top:12px;'>Voltar ao site</a>
           </div></main></body></html>";
     exit;
