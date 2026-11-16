@@ -836,9 +836,19 @@ body.black-white h2 {
 /* Botões da coluna Ações na mesma linha */
 .acoes {
   display: flex;
-  gap: 6px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.acoes .btn {
+  display: inline-block;
+  padding: 8px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.2;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
 }
 
 .painel td { white-space: nowrap; }
@@ -892,4 +902,42 @@ button.btn { border: none; cursor: pointer; font: inherit; }
   font-size: 14px;
   color: #B47B43;
   text-decoration: none;
+}
+
+
+#dialogo-cancelar {
+  background: #2f2f2f;
+  color: #fff;
+  border: 1px solid #b87d44;
+  border-radius: 16px;
+  padding: 24px 32px;
+  text-align: center;
+  margin: auto;
+}
+
+#dialogo-cancelar::backdrop {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.dialogo-botoes {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.dialogo-botoes button {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid #b87d44;
+  background: transparent;
+  color: #b87d44;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btn-confirmar {
+  background: #e07a8a;
+  border-color: #e07a8a;
+  color: #fff;
 }

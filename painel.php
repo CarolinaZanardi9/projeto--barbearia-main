@@ -50,8 +50,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit" class="btn-agendar">Ver</button>
       </form>
 
-      
-      <a class="btn-cancelar" href="index.html" >Voltar ao site</a>
+      <a class="btn-cancelar" href="index.html">Voltar ao site</a>
 
       <?php if (count($agendamentos) === 0): ?>
         <p class="subtitulo">Nenhum agendamento neste dia.</p>
@@ -72,13 +71,13 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td>
               <div class="acoes">
                 <a href="editar.php?id=<?= (int)$a['id'] ?>" class="btn">Editar</a>
-              <form method="POST" action="excluir.php" style="display:inline"
-                onsubmit="return confirm('Excluir este agendamento? Não dá para desfazer.');">
-                <input type="hidden" name="id" value="<?= (int)$a['id'] ?>">
-                <input type="hidden" name="dia" value="<?= htmlspecialchars($dia) ?>">
-                <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-                <button type="submit" class="btn">Excluir</button>
-              </form>
+                <form method="POST" action="excluir.php" class="form-excluir"
+                      data-resumo="<?= htmlspecialchars($a['nome'] . ' ' . $a['sobrenome'] . ' · ' . $a['servico'] . ' · ' . date('d/m/Y', strtotime($dia)) . ' às ' . substr($a['horario'], 0, 5)) ?>">
+                  <input type="hidden" name="id" value="<?= (int)$a['id'] ?>">
+                  <input type="hidden" name="dia" value="<?= htmlspecialchars($dia) ?>">
+                  <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
+                  <button type="button" class="btn btn-excluir">Excluir</button>
+                </form>
               </div>
             </td>
           </tr>
@@ -87,5 +86,45 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php endif; ?>
     </div>
   </main>
+
+  <dialog id="dialogo-cancelar">
+    <div class="dialogo-conteudo">
+      <div class="dialogo-icone">⚠️</div>
+      <h2>Excluir agendamento?</h2>
+      <p class="dialogo-resumo" id="dialogo-resumo"></p>
+      <p class="dialogo-aviso">Essa ação apaga o registro e não pode ser desfeita.</p>
+      <div class="dialogo-botoes">
+        <button type="button" id="btn-voltar">Voltar</button>
+        <button type="button" id="btn-confirmar">Sim, excluir</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const dialogo = document.getElementById('dialogo-cancelar');
+    const resumo = document.getElementById('dialogo-resumo');
+    let formAtual = null;
+
+    document.querySelectorAll('.btn-excluir').forEach(botao => {
+      botao.addEventListener('click', () => {
+        formAtual = botao.closest('form');
+        resumo.textContent = formAtual.dataset.resumo;
+        dialogo.showModal();
+      });
+    });
+
+    document.getElementById('btn-voltar').addEventListener('click', () => {
+      dialogo.close();
+    });
+
+    document.getElementById('btn-confirmar').addEventListener('click', () => {
+      formAtual.submit();
+    });
+
+    // fecha ao clicar fora da caixa
+    dialogo.addEventListener('click', (e) => {
+      if (e.target === dialogo) dialogo.close();
+    });
+  </script>
 </body>
 </html>

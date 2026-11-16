@@ -68,11 +68,11 @@ $classes = [1 => 'agendado', 2 => 'concluido', 3 => 'cancelado'];
               <?= htmlspecialchars($a['status']) ?>
             </span>
             <?php if ($pode): ?>
-              <form method="POST" action="cancelar_agendamento.php"
-                    onsubmit="return confirm('Cancelar este agendamento?');">
+              <form method="POST" action="cancelar_agendamento.php" class="form-cancelar"
+      data-resumo="<?= htmlspecialchars($a['servico']) ?> · <?= date('d/m/Y', strtotime($a['dia'])) ?> às <?= substr($a['horario'], 0, 5) ?>">
                 <input type="hidden" name="id" value="<?= (int) $a['id'] ?>">
                 <input type="hidden" name="csrf" value="<?= $_SESSION['csrf'] ?>">
-                <button type="submit" class="btn-cancelar-ag">Cancelar agendamento</button>
+                <button type="button" class="btn-cancelar-ag">Cancelar agendamento</button>
               </form>
             <?php endif; ?>
           </li>
@@ -81,5 +81,38 @@ $classes = [1 => 'agendado', 2 => 'concluido', 3 => 'cancelado'];
       <?php endif; ?>
     </div>
   </main>
+
+  <dialog id="dialogo-cancelar">
+  <div class="dialogo-conteudo">
+    <div class="dialogo-icone">⚠️</div>
+    <h2>Cancelar agendamento?</h2>
+    <p class="dialogo-resumo" id="dialogo-resumo"></p>
+    <p class="dialogo-aviso">Essa ação não pode ser desfeita.</p>
+    <div class="dialogo-botoes">
+      <button type="button" id="btn-voltar">Manter agendamento</button>
+      <button type="button" id="btn-confirmar">Sim, cancelar</button>
+    </div>
+  </div>
+</dialog>
+
+  <script>
+    const dialogo = document.getElementById('dialogo-cancelar');
+    let formAtual = null;
+
+    document.querySelectorAll('.btn-cancelar-ag').forEach(botao => {
+      botao.addEventListener('click', () => {
+        formAtual = botao.closest('form');
+        dialogo.showModal();
+      });
+    });
+
+    document.getElementById('btn-voltar').addEventListener('click', () => {
+      dialogo.close();
+    });
+
+    document.getElementById('btn-confirmar').addEventListener('click', () => {
+      formAtual.submit();
+    });
+  </script>
 </body>
 </html>
