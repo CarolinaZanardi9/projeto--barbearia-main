@@ -50,7 +50,8 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit" class="btn-agendar">Ver</button>
       </form>
 
-      <a href="logout.php" class="btn-cancelar">Sair</a>
+      
+      <a class="btn-cancelar" href="index.html" >Voltar ao site</a>
 
       <?php if (count($agendamentos) === 0): ?>
         <p class="subtitulo">Nenhum agendamento neste dia.</p>
@@ -70,7 +71,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($a['status']) ?></td>
             <td>
               <div class="acoes">
-                <a class="btn-cancelar" href="index.html" style="display:inline-block; width:auto; padding:10px 20px;">← Voltar ao site</a>
                 <a href="editar.php?id=<?= (int)$a['id'] ?>" class="btn">Editar</a>
               <form method="POST" action="excluir.php" style="display:inline"
                 onsubmit="return confirm('Excluir este agendamento? Não dá para desfazer.');">
