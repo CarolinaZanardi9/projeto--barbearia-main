@@ -884,3 +884,12 @@ button.btn { border: none; cursor: pointer; font: inherit; }
   font-weight: bold;
   margin: 16px 0 8px;
 }
+
+.senha {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #B47B43;
+  text-decoration: none;
+}

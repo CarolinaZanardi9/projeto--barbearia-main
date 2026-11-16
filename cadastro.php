@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         } catch (PDOException $e) {
+            error_log($e->getMessage());
             $erro = 'Não foi possível criar a conta. Tente novamente.';
         }
     }

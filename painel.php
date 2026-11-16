@@ -70,6 +70,7 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= htmlspecialchars($a['status']) ?></td>
             <td>
               <div class="acoes">
+                <a class="btn-cancelar" href="index.html" style="display:inline-block; width:auto; padding:10px 20px;">← Voltar ao site</a>
                 <a href="editar.php?id=<?= (int)$a['id'] ?>" class="btn">Editar</a>
               <form method="POST" action="excluir.php" style="display:inline"
                 onsubmit="return confirm('Excluir este agendamento? Não dá para desfazer.');">
